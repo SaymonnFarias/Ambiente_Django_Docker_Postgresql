@@ -29,7 +29,7 @@ SECRET_KEY = "XBwvVye7wqbQ+RIdXeVoVGgtpmDRoCphyJ7RxWhaCuQ="
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv('DEBUG', 0)))
 
-# Fazendo a leitura do ALLOWED_HOSTS do arquivo .env, limpando os espaços em branco e  caso não tenha nada, será uma lista vazia
+# Fazendo a leitura do ALLOWED_HOSTS do arquivo .env, limpando os espaços e caso não tenha nada, será uma lista vazia
 ALLOWED_HOSTS = [
     h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()  
 ]
@@ -81,12 +81,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME' : os.getenv('POSTGRES_DB', 'ambiente_postgresql'),
-        'USER' : os.getenv('POSTGRES_USER', 'ambiente_user'),
-        'PASSWORD' : os.getenv('POSTGRES_PASSWORD', 'ambiente_user_password'),
-        'HOST' : os.getenv('POSTGRES_HOST', 'localhost'),
-        'PORT' : os.getenv('POSTGRES_PORT', '5432'),
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('POSTGRES_DB', 'ambiente_postgresql'),
+        'USER': os.getenv('POSTGRES_USER', 'ambiente_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'ambiente_user_password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
