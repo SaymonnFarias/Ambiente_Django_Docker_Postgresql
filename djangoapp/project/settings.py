@@ -31,7 +31,7 @@ DEBUG = bool(int(os.getenv('DEBUG', 0)))
 
 # Fazendo a leitura do ALLOWED_HOSTS do arquivo .env, limpando os espaços e caso não tenha nada, será uma lista vazia
 ALLOWED_HOSTS = [
-    h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()  
+    h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()
 ]
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blog',
 ]
 
 MIDDLEWARE = [
