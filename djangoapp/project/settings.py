@@ -11,21 +11,28 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# arquivos estaticos /data/web/static
+# arquivos de media /data/web/media
+DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zi#wsg^k#9rcz0ab%x)@5d0o%p*)-@zx8y40q&xieslav(t-j*'
+SECRET_KEY = "XBwvVye7wqbQ+RIdXeVoVGgtpmDRoCphyJ7RxWhaCuQ="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.getenv('DEBUG', 0)))
 
-ALLOWED_HOSTS = []
+# Fazendo a leitura do ALLOWED_HOSTS do arquivo .env, limpando os espaços em branco e  caso não tenha nada, será uma lista vazia
+ALLOWED_HOSTS = [
+    h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()  
+]
 
 
 # Application definition
@@ -74,8 +81,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE' : os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME' : os.getenv('POSTGRES_DB', 'ambiente_postgresql'),
+        'USER' : os.getenv('POSTGRES_USER', 'ambiente_user'),
+        'PASSWORD' : os.getenv('POSTGRES_PASSWORD', 'ambiente_user_password'),
+        'HOST' : os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT' : os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -102,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -114,4 +125,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# Diretório onde os arquivos estáticos serão coletados
+STATIC_ROOT = DATA_DIR / 'static'
+
+MEDIA_URL = '/media/'
+# Diretório onde os arquivos de media serão coletados
+MEDIA_ROOT = DATA_DIR / 'media'
