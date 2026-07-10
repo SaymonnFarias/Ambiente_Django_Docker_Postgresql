@@ -1,10 +1,8 @@
 #Docker-compose.yml serve para definir, configurar e executar aplicações multi-contêineres
 
-version: '3.9'
-
 services:
   djangoapp:
-    container_name: djangoapp
+    container_name: djangoapp1
     build:
       context: .
     ports:
@@ -15,12 +13,12 @@ services:
       - ./data/web/media:/data/web/media/
     env_file:
       - ./dotenv_files/.env
-    depends_on:
-      - psql
-  psql:
-    container_name: psql
-    image: postgres:15-alpine
-    volumes:
-      - ./data/postgres/data:/var/lib/postgresql/data/
-    env_file:
-      - ./dotenv_files/.env
+    environment:
+      - POSTGRES_HOST=postgres-universal
+      - POSTGRES_PORT=5432
+    networks:
+      - global-database-net
+
+networks:
+  global-database-net:
+    external: true
